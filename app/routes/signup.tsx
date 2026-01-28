@@ -1,5 +1,6 @@
 import type { Route } from './+types/signup';
 import { Signup } from '~/pages';
+import { PublicLayout } from '~/layouts';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +10,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function SignupRoute() {
-  return <Signup />;
+  return (
+    <PublicLayout>
+      <Signup />
+    </PublicLayout>
+  );
 }

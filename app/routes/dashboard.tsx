@@ -1,5 +1,6 @@
 import type { Route } from './+types/dashboard';
 import { Dashboard } from '~/pages';
+import { AuthLayout } from '~/layouts';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +10,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function DashboardRoute() {
-  return <Dashboard />;
+  return (
+    <AuthLayout>
+      <Dashboard />
+    </AuthLayout>
+  );
 }

@@ -124,9 +124,9 @@ export function Login() {
               </Form.Item>
 
               <div className="flex justify-end mb-4">
-                <a href="#" className="text-sm text-gray-600 hover:text-indigo-600">
+                <Link to="/forgot-password" className="text-sm text-gray-600 hover:text-indigo-600">
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               <Form.Item className="mb-0">

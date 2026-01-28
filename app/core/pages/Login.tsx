@@ -68,6 +68,12 @@ export function Login() {
             <Input.Password placeholder="••••••••" size="large" />
           </Form.Item>
 
+          <div className="flex justify-end mb-4">
+            <Link to="/forgot-password" className="text-sm">
+              Forgot password?
+            </Link>
+          </div>
+
           <Form.Item className="mb-0">
             <Button
               type="primary"
