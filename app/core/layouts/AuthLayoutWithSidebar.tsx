@@ -11,8 +11,6 @@ import { useAuthStore } from '../stores/auth-store';
 import { Sidebar, Header, Content } from '../components';
 import type { SidebarProps, HeaderProps } from '../components';
 
-const { Layout: AntLayout } = Layout;
-
 export interface AuthLayoutWithSidebarProps {
   children?: React.ReactNode;
   /**
@@ -94,7 +92,7 @@ export function AuthLayoutWithSidebar({
   );
 
   return (
-    <AntLayout className="min-h-screen">
+    <Layout className="min-h-screen">
       <Sidebar
         collapsed={sidebarCollapsed}
         onCollapse={setSidebarCollapsed}
@@ -102,7 +100,7 @@ export function AuthLayoutWithSidebar({
         logo={sidebarLogo}
         {...sidebarProps}
       />
-      <AntLayout>
+      <Layout>
         <Header
           title={headerTitle}
           leftContent={headerLeft}
@@ -112,7 +110,7 @@ export function AuthLayoutWithSidebar({
         <Content>
           {children || <Outlet />}
         </Content>
-      </AntLayout>
-    </AntLayout>
+      </Layout>
+    </Layout>
   );
 }

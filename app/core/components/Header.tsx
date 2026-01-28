@@ -5,11 +5,10 @@
 
 import React from 'react';
 import { Layout } from 'antd';
-import type { HeaderProps as AntHeaderProps } from 'antd/es/layout';
 
 const { Header: AntHeader } = Layout;
 
-export interface HeaderProps extends AntHeaderProps {
+export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   leftContent?: React.ReactNode;
   rightContent?: React.ReactNode;
   title?: string;

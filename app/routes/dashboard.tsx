@@ -1,6 +1,8 @@
 import type { Route } from './+types/dashboard';
 import { Dashboard } from '~/pages';
-import { AuthLayout } from '~/layouts';
+import { AuthLayoutWithSidebar } from '~/layouts';
+import { Menu } from '~/components';
+import { defaultMenuItems } from '~/core/config/menu';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,8 +13,12 @@ export function meta({}: Route.MetaArgs) {
 
 export default function DashboardRoute() {
   return (
-    <AuthLayout>
+    <AuthLayoutWithSidebar
+      menuItems={<Menu items={defaultMenuItems} />}
+      sidebarLogo={<div className="font-bold text-lg">App</div>}
+      headerTitle="Dashboard"
+    >
       <Dashboard />
-    </AuthLayout>
+    </AuthLayoutWithSidebar>
   );
 }

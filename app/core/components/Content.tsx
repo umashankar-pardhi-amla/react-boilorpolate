@@ -5,11 +5,10 @@
 
 import React from 'react';
 import { Layout } from 'antd';
-import type { ContentProps } from 'antd/es/layout';
 
 const { Content: AntContent } = Layout;
 
-export interface ContentComponentProps extends ContentProps {
+export interface ContentComponentProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 

@@ -3,6 +3,7 @@
  * Override in app/extensions/config/menu.ts
  */
 
+import React from 'react';
 import type { MenuItem } from '../components/Menu';
 import { HomeOutlined, DashboardOutlined, SettingOutlined } from '@ant-design/icons';
 
@@ -11,18 +12,18 @@ export const defaultMenuItems: MenuItem[] = [
     key: '/dashboard',
     label: 'Dashboard',
     path: '/dashboard',
-    icon: <DashboardOutlined />,
+    icon: React.createElement(DashboardOutlined),
   },
   {
     key: '/home',
     label: 'Home',
     path: '/home',
-    icon: <HomeOutlined />,
+    icon: React.createElement(HomeOutlined),
   },
   {
     key: '/extensions-demo',
     label: 'Examples',
     path: '/extensions-demo',
-    icon: <SettingOutlined />,
+    icon: React.createElement(SettingOutlined),
   },
 ];

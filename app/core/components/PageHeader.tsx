@@ -4,14 +4,16 @@
  */
 
 import React from 'react';
-import { PageHeader as AntPageHeader } from 'antd';
-import type { PageHeaderProps as AntPageHeaderProps } from 'antd';
+import { Typography } from 'antd';
 
-export interface PageHeaderProps extends AntPageHeaderProps {
+const { Title, Text } = Typography;
+
+export interface PageHeaderProps {
   title: string;
   subtitle?: string;
   actions?: React.ReactNode;
   breadcrumb?: React.ReactNode;
+  className?: string;
 }
 
 export function PageHeader({
@@ -20,16 +22,19 @@ export function PageHeader({
   actions,
   breadcrumb,
   className,
-  ...props
 }: PageHeaderProps) {
   return (
-    <AntPageHeader
-      title={title}
-      subTitle={subtitle}
-      extra={actions}
-      breadcrumb={breadcrumb}
-      className={`base-page-header ${className ?? ''}`.trim()}
-      {...props}
-    />
+    <div className={`base-page-header mb-6 ${className ?? ''}`.trim()}>
+      {breadcrumb && <div className="mb-2">{breadcrumb}</div>}
+      <div className="flex items-center justify-between">
+        <div>
+          <Title level={2} className="!mb-1">
+            {title}
+          </Title>
+          {subtitle && <Text type="secondary">{subtitle}</Text>}
+        </div>
+        {actions && <div>{actions}</div>}
+      </div>
+    </div>
   );
 }
