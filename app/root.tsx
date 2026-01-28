@@ -7,8 +7,11 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import React from "react";
 import type { Route } from "./+types/root";
 import "./app.css";
+import { AppProviders } from "./core/providers";
+import { loadExtensions } from "./core/extension-loader";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +45,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  // Load extensions on app mount
+  React.useEffect(() => {
+    loadExtensions().catch((error) => {
+      console.error('Failed to load extensions:', error);
+    });
+  }, []);
+
+  return (
+    <AppProviders>
+      <Outlet />
+    </AppProviders>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

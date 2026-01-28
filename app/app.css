@@ -13,3 +13,5 @@ body {
     color-scheme: dark;
   }
 }
+
+/* Ant Design styles are imported via ConfigProvider */
