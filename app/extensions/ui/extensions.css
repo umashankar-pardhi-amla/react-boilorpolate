@@ -1,0 +1,26 @@
+/**
+ * Extended styles – extensible CSS example.
+ * Scoped to .ext-app-shell so it doesn't conflict with base.
+ */
+
+.ext-app-shell {
+  min-height: 100vh;
+}
+
+/* Extended button from extensions/components/Button.tsx */
+.ext-button.ant-btn-primary {
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+.ext-button.ant-btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.45);
+}
+
+/* Extended card from extensions/components/Card.tsx */
+.ext-card.ant-card {
+  border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.ext-card .ant-card-head {
+  border-bottom-color: rgba(99, 102, 241, 0.12);
+}

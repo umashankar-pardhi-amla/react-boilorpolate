@@ -72,9 +72,15 @@ class Registry {
       }
     }
 
-    // Merge base and extension
+    // Merge base and extension (replace entirely for functions)
     if (entry.extension) {
-      entry.merged = this.deepMerge(entry.base, entry.extension) as T;
+      if (typeof entry.base === 'function' && typeof entry.extension === 'function') {
+        entry.merged = entry.extension as T;
+      } else if (typeof entry.base !== 'object' || typeof entry.extension !== 'object') {
+        entry.merged = entry.extension as T;
+      } else {
+        entry.merged = this.deepMerge(entry.base, entry.extension) as T;
+      }
     } else {
       entry.merged = entry.base as T;
     }

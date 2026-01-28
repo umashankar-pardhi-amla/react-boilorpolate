@@ -15,3 +15,6 @@ body {
 }
 
 /* Ant Design styles are imported via ConfigProvider */
+
+/* Extended styles (extensibility – theme + component overrides) */
+@import "./extensions/ui/extensions.css";

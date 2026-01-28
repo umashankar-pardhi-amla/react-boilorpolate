@@ -2,13 +2,12 @@
  * Utility Functions
  */
 
-/**
- * Format date
- */
-export function formatDate(date: Date | string, format?: string): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleDateString();
-}
+export {
+  formatDate,
+  getFormatDate,
+  baseFormatDate,
+} from './formatDate';
+export type { FormatDateFn } from './formatDate';
 
 /**
  * Debounce function

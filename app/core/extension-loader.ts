@@ -37,6 +37,12 @@ export async function loadExtensions(): Promise<void> {
       loader: () => import('~/extensions/ui/provider').catch(() => null),
       getInstance: (mod: any) => mod?.UIProvider || mod?.default,
     },
+    // formatDate function extension
+    {
+      key: createRegistryKey('utils', 'formatDate'),
+      loader: () => import('~/extensions/utils/formatDate').catch(() => null),
+      getInstance: (mod: any) => mod?.formatDate,
+    },
   ];
 
   for (const { key, loader, getInstance } of extensionModules) {

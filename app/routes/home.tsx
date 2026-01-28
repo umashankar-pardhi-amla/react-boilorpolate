@@ -1,5 +1,6 @@
+import { Link } from "react-router";
 import type { Route } from "./+types/home";
-import { Button } from "~/core/components";
+import { Button } from "~/components";
 import { useExampleStore } from "~/core/stores/example-store";
 import { logger } from "~/core/logger";
 import { useHttp } from "~/core/hooks";
@@ -107,6 +108,20 @@ export default function Home() {
                 Instead, create extensions in{" "}
                 <code className="bg-gray-100 px-2 py-1 rounded">app/extensions/</code>.
               </Paragraph>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link to="/extensions-demo">
+                  <Button type="primary">View all extensibility examples →</Button>
+                </Link>
+                <Link to="/login">
+                  <Button>Sign in</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button>Sign up</Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button>Dashboard</Button>
+                </Link>
+              </div>
             </Card>
           </Space>
         </Card>
