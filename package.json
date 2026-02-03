@@ -5,17 +5,19 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "dev:all": "concurrently -n dev,test -c blue,yellow \"npm run dev\" \"npm run test\"",
+    "dev:all": "npm run dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "test": "cross-env VITEST=1 vitest",
-    "test:run": "cross-env VITEST=1 vitest run",
-    "test:coverage": "cross-env VITEST=1 vitest run --coverage",
-    "lint": "eslint app/",
-    "format": "prettier --write \"app/**/*.{ts,tsx,css,json}\" \"tests/**/*.{ts,tsx}\"",
-    "validate": "npm run typecheck && npm run test:run && npm run lint",
-    "spellcheck": "cspell \"app/**/*.{ts,tsx,json,css}\" \"tests/**/*.{ts,tsx}\"",
-    "spellcheck:ci": "cspell \"app/**/*.{ts,tsx,json,css}\" \"tests/**/*.{ts,tsx}\" \"*.md\" --no-progress",
+    "lint": "eslint app/ e2e/",
+    "format": "prettier --write \"app/**/*.{ts,tsx,css,json}\" \"e2e/**/*.ts\"",
+    "validate": "npm run typecheck && npm run lint",
+    "spellcheck": "cspell \"app/**/*.{ts,tsx,json,css}\" \"e2e/**/*.ts\"",
+    "spellcheck:ci": "cspell \"app/**/*.{ts,tsx,json,css}\" \"e2e/**/*.ts\" \"*.md\" --no-progress",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:install": "playwright install chromium",
+    "build:analyze": "cross-env ANALYZE=1 npm run build",
+    "validate:all": "npm run typecheck && npm run lint && npm run e2e",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -24,7 +26,8 @@
       "prettier --write",
       "cspell --no-must-find-files"
     ],
-    "tests/**/*.{ts,tsx}": [
+    "e2e/**/*.ts": [
+      "eslint --fix",
       "prettier --write",
       "cspell --no-must-find-files"
     ],
@@ -49,29 +52,25 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@playwright/test": "^1.58.1",
     "@react-router/dev": "7.12.0",
     "@tailwindcss/vite": "^4.1.13",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "cspell": "^9.6.3",
     "eslint": "^9.39.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
-    "jsdom": "^28.0.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "rollup-plugin-visualizer": "^6.0.5",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.54.0",
     "vite": "^7.1.7",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^4.0.18"
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

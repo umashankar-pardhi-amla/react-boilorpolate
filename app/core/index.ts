@@ -1,44 +1,48 @@
 /**
  * Core Module Exports
- * 
+ *
  * Central export point for all core functionality
  */
 
 // Registry
-export { registry, createRegistryKey } from './registry';
+export { registry, createRegistryKey } from "./registry";
 
 // Logger
-export { logger, getLogger, createLogger, LogLevel } from './logger';
-export type { LoggerConfig, LogEntry } from './logger';
+export { logger, getLogger, createLogger, LogLevel } from "./logger";
+export type { LoggerConfig, LogEntry } from "./logger";
 
 // HTTP
-export { httpClient, getHttpClient, createHttpClient } from './http';
-export type { HttpConfig, RequestInterceptor, ResponseInterceptor } from './http';
+export { httpClient, getHttpClient, createHttpClient } from "./http";
+export type { HttpConfig, RequestInterceptor, ResponseInterceptor } from "./http";
 
 // Query
-export { queryConfig, getQueryConfig, createQueryConfig } from './query';
-export type { QueryConfig } from './query';
+export { queryConfig, getQueryConfig, createQueryConfig } from "./query";
+export type { QueryConfig } from "./query";
 
 // Store
-export { createBaseStore } from './store';
-export type { BaseStore, StoreConfig, StoreCreator } from './store';
+export { createBaseStore } from "./store";
+export type { BaseStore, StoreConfig, StoreCreator } from "./store";
 
 // UI
-export { BaseUIProvider } from './ui';
-export type { ThemeConfig, BaseUIProviderProps } from './ui';
+export { BaseUIProvider } from "./ui";
+export type { ThemeConfig, BaseUIProviderProps } from "./ui";
 
 // Components
-export { Button } from './components';
-export type { ButtonProps } from './components';
+export { Button } from "./components";
+export type { ButtonProps } from "./components";
 
 // Hooks
-export { useHttp, useLogger } from './hooks';
+export { useHttp, useLogger } from "./hooks";
 
 // Utils
-export * from './utils';
+export * from "./utils";
 
 // Providers
-export { AppProviders } from './providers';
+export { AppProviders } from "./providers";
 
 // Extension Loader
-export { loadExtensions, loadExtension } from './extension-loader';
+export { loadExtensions, loadExtension } from "./extension-loader";
+
+// Monitoring (error reporting for production)
+export { reportError, setErrorReporter } from "./monitoring";
+export type { ErrorReport } from "./monitoring";

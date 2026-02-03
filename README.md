@@ -2,6 +2,8 @@
 
 A highly extensible React boilerplate with enterprise-grade features and a plugin-based architecture that allows extending functionality without modifying base code.
 
+For a full picture of how the app is structured and how extensions work, see **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
+
 ## Features
 
 - ✅ **Zustand** - State management with extensible store pattern
@@ -60,49 +62,50 @@ npm install
 npm run dev
 ```
 
-For a faster workflow (dev + test watch in one terminal): `npm run dev:all`. See [FAST_DEVELOPMENT.md](./FAST_DEVELOPMENT.md).
-
 ### Build
 
 ```bash
 npm run build
 ```
 
-### Testing
+### Testing (Playwright E2E)
 
 ```bash
-npm test          # Watch mode
-npm run test:run  # Single run (CI)
-npm run test:coverage  # With coverage
+npm run e2e:install   # Install Chromium once per machine
+npm run e2e           # Run E2E tests (starts dev server automatically)
+npm run e2e:ui        # Run with Playwright UI for debugging
+npm run validate:all  # typecheck + lint + e2e (same as CI)
 ```
 
-See [TESTING.md](./TESTING.md) for the full testing guide.
+Tests live in `e2e/*.spec.ts`. Add new `*.spec.ts` files for more flows.
 
 ### Lint, format & spellcheck
 
 ```bash
-npm run lint        # ESLint
-npm run format      # Prettier
-npm run spellcheck  # cspell (typos in app + tests)
+npm run lint        # ESLint (app/ + e2e/)
+npm run format      # Prettier (uses .prettierrc)
+npm run spellcheck  # cspell – fix typos; add terms in cspell.json
 ```
 
 ### Quality at check-in (Husky)
 
-- **Pre-commit:** lint-staged runs ESLint + cspell on staged files.
-- **Pre-push:** typecheck + test:run.
+- **Pre-commit:** typecheck → lint → format + spellcheck on staged files (lint-staged). Commit blocked if any step fails.
+- **Pre-push:** typecheck → e2e. Push blocked if tests fail.
 
-See [QUALITY_CHECKS.md](./QUALITY_CHECKS.md).
+On failure you get a clear message and the command to re-run (e.g. `npm run typecheck`).
 
-### Production
+### Before production
 
-Before deploying, use [PRODUCTION_CHECKLIST.md](./PRODUCTION_CHECKLIST.md). Run:
+Run:
 
 ```bash
 npm run typecheck
-npm run test:run
 npm run lint
+npm run e2e
 npm run build
 ```
+
+Set `VITE_API_BASE_URL` and other env vars (see `.env.example`). Replace demo auth in Login/Signup with real backend. Optional: plug error reporting via `setErrorReporter()` from `~/core/monitoring` (e.g. Sentry). Health check: `GET /health`.
 
 ## Extending the Base
 

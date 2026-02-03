@@ -34,3 +34,12 @@ build
 
 # Test coverage
 coverage
+
+# Bundle analysis output
+build/stats.html
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/

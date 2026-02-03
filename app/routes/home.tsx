@@ -94,7 +94,8 @@ export default function Home() {
               <Paragraph>
                 This project uses a registry pattern that allows you to extend base implementations
                 without modifying base code. See{" "}
-                <code className="bg-gray-100 px-2 py-1 rounded">EXTENSIBILITY.md</code> for details.
+                <code className="bg-gray-100 px-2 py-1 rounded">README.md</code> and{" "}
+                <code className="bg-gray-100 px-2 py-1 rounded">ARCHITECTURE.md</code> for details.
               </Paragraph>
               <Paragraph>
                 <strong>Key Principle:</strong> Never modify files in{" "}

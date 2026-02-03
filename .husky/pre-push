@@ -16,12 +16,12 @@ if ! npm run typecheck; then
 fi
 
 echo ""
-echo ">>> Pre-push: Running tests..."
-if ! npm run test:run; then
+echo ">>> Pre-push: Running E2E tests (Playwright)..."
+if ! npm run e2e; then
   echo ""
-  echo "❌ PUSH BLOCKED: One or more tests failed."
+  echo "❌ PUSH BLOCKED: One or more E2E tests failed."
   echo "   Fix the failing tests above, then try your push again."
-  echo "   To re-run tests locally: npm run test:run"
+  echo "   To re-run locally: npm run e2e"
   echo ""
   exit 1
 fi

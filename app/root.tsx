@@ -12,6 +12,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { AppProviders } from "./core/providers";
 import { loadExtensions } from "./core/extension-loader";
+import { reportError } from "./core/monitoring";
 import { NotFound } from "./pages";
 
 export const links: Route.LinksFunction = () => [
@@ -49,7 +50,7 @@ export default function App() {
   // Load extensions on app mount
   React.useEffect(() => {
     loadExtensions().catch((error) => {
-      console.error('Failed to load extensions:', error);
+      console.error("Failed to load extensions:", error);
     });
   }, []);
 
@@ -76,9 +77,15 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   if (isRouteErrorResponse(error)) {
     message = error.status === 403 ? "Forbidden" : "Error";
     details = error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+    reportError({
+      message,
+      context: { status: error.status, statusText: error.statusText },
+      level: "error",
+    });
+  } else if (error && error instanceof Error) {
     details = error.message;
-    stack = error.stack;
+    stack = import.meta.env.DEV ? error.stack : undefined;
+    reportError({ message: error.message, stack: error.stack, level: "error" });
   }
 
   return (

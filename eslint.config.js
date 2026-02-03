@@ -6,7 +6,7 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ["app/**/*.{ts,tsx}"],
+    files: ["app/**/*.{ts,tsx}", "e2e/**/*.ts"],
     plugins: { "react-hooks": reactHooks },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -15,6 +15,6 @@ export default [
     },
   },
   {
-    ignores: ["build/**", "node_modules/**", ".react-router/**", "**/*.config.js", "**/*.config.ts", "coverage/**", "tests/**"],
+    ignores: ["build/**", "node_modules/**", ".react-router/**", "**/*.config.js", "**/*.config.ts", "playwright.config.ts"],
   },
 ];

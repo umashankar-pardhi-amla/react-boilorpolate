@@ -36,7 +36,12 @@
     "lement",
     "utton",
     "omponent",
-    "tring"
+    "tring",
+    "playwright",
+    "getByRole",
+    "getByLabel",
+    "toHaveURL",
+    "anypassword"
   ],
   "ignorePaths": [
     "node_modules",

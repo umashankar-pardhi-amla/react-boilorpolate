@@ -614,11 +614,10 @@ const newUser = await httpClient.post('/api/users', { name: 'John' });
 
 ## Testing
 
-- **Framework:** Vitest + React Testing Library + jsdom
-- **Commands:** `npm test` (watch), `npm run test:run` (CI), `npm run test:coverage`
-- **Location:** Co-located `*.test.ts` / `*.test.tsx` or `__tests__/`
-- **Setup:** `vitest.setup.ts` loads `@testing-library/jest-dom`; tests run with `VITEST=1` so the React Router Vite plugin is disabled
-- **Docs:** [TESTING.md](./TESTING.md)
+- **Framework:** Playwright (E2E only)
+- **Commands:** `npm run e2e:install` (once), `npm run e2e`, `npm run e2e:ui`
+- **Location:** `e2e/*.spec.ts`
+- **Details:** See [README.md](./README.md) – Getting Started / Testing
 
 ---
 
@@ -627,7 +626,7 @@ const newUser = await httpClient.post('/api/users', { name: 'John' });
 - **Env validation:** `app/core/config/env.ts` uses zod; override in extensions if needed
 - **404:** Root ErrorBoundary renders `NotFound` for 404
 - **403:** `/unauthorized` route and `Unauthorized` page
-- **Checklist:** [PRODUCTION_CHECKLIST.md](./PRODUCTION_CHECKLIST.md) – security, testing, deploy, extensions
+- **Before deploy:** See [README.md](./README.md) – Before production
 
 ---
 
