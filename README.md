@@ -48,64 +48,51 @@ app/
 └── routes/                   # Your routes
 ```
 
-## Getting Started
-
-### Installation
+## Installation
 
 ```bash
+git clone <repo-url>
+cd react-boilorpolate
 npm install
+npm run e2e:install   # Install Playwright Chromium (once per machine)
 ```
 
-### Development
+Copy `.env.example` to `.env` and set `VITE_API_BASE_URL` if needed.
 
-```bash
-npm run dev
-```
+---
 
-### Build
+## Important commands
 
-```bash
-npm run build
-```
-
-### Testing (Playwright E2E)
-
-```bash
-npm run e2e:install   # Install Chromium once per machine
-npm run e2e           # Run E2E tests (starts dev server automatically)
-npm run e2e:ui        # Run with Playwright UI for debugging
-npm run validate:all  # typecheck + lint + e2e (same as CI)
-```
-
-Tests live in `e2e/*.spec.ts`. Add new `*.spec.ts` files for more flows.
-
-### Lint, format & spellcheck
-
-```bash
-npm run lint        # ESLint (app/ + e2e/)
-npm run format      # Prettier (uses .prettierrc)
-npm run spellcheck  # cspell – fix typos; add terms in cspell.json
-```
+| Command | Purpose |
+|--------|--------|
+| **Development** | |
+| `npm run dev` | Start dev server (HMR) |
+| `npm run build` | Production build |
+| `npm run start` | Serve production build |
+| **Testing** | See [TESTING.md](./TESTING.md) for details. |
+| `npm run e2e:install` | Install Playwright browser (once) |
+| `npm run e2e` | Run E2E tests (starts dev server, runs tests) |
+| `npm run e2e:ui` | Run E2E with Playwright UI (debug) |
+| `npm run validate:all` | typecheck + lint + e2e (same as CI) |
+| **Quality** | |
+| `npm run typecheck` | TypeScript check |
+| `npm run lint` | ESLint (app/ + e2e/) |
+| `npm run format` | Prettier (uses .prettierrc) |
+| `npm run spellcheck` | cspell – add unknown terms in cspell.json |
+| **Other** | |
+| `npm run build:analyze` | Build + bundle size report (build/stats.html) |
+| `npm run validate` | typecheck + lint (no e2e) |
 
 ### Quality at check-in (Husky)
 
-- **Pre-commit:** typecheck → lint → format + spellcheck on staged files (lint-staged). Commit blocked if any step fails.
+- **Pre-commit:** typecheck → lint → format + spellcheck on staged files. Commit blocked if any step fails.
 - **Pre-push:** typecheck → e2e. Push blocked if tests fail.
 
-On failure you get a clear message and the command to re-run (e.g. `npm run typecheck`).
+On failure you see which step failed and which command to re-run.
 
 ### Before production
 
-Run:
-
-```bash
-npm run typecheck
-npm run lint
-npm run e2e
-npm run build
-```
-
-Set `VITE_API_BASE_URL` and other env vars (see `.env.example`). Replace demo auth in Login/Signup with real backend. Optional: plug error reporting via `setErrorReporter()` from `~/core/monitoring` (e.g. Sentry). Health check: `GET /health`.
+Run: `npm run typecheck && npm run lint && npm run e2e && npm run build`. Set env vars (`.env.example`). Replace demo auth with real backend. Optional: `setErrorReporter()` from `~/core/monitoring` (e.g. Sentry). Health: `GET /health`.
 
 ## Extending the Base
 
