@@ -10,6 +10,14 @@ export default defineConfig({
     ...(isTest ? [] : [reactRouter()]),
     tsconfigPaths(),
   ],
+  server: {
+    strictPort: false,
+    hmr: true,
+    watch: { usePolling: false },
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "antd", "zustand", "@tanstack/react-query", "axios"],
+  },
   // @ts-expect-error Vitest extends Vite config with test
   test: {
     globals: true,

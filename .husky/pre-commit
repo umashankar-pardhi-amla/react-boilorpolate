@@ -1,0 +1,41 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+# Pre-commit: code must build, lint, and pass format/spellcheck on staged files.
+# If any step fails, you see a clear message below and the commit is blocked.
+# -----------------------------------------------------------------------------
+
+echo ""
+echo ">>> Pre-commit: Running typecheck (code must build)..."
+if ! npm run typecheck; then
+  echo ""
+  echo "❌ COMMIT BLOCKED: TypeScript / typecheck failed."
+  echo "   Fix the errors above, then try your commit again."
+  echo "   To re-check locally: npm run typecheck"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo ">>> Pre-commit: Running lint (full project)..."
+if ! npm run lint; then
+  echo ""
+  echo "❌ COMMIT BLOCKED: ESLint failed."
+  echo "   Fix the errors above, then try your commit again."
+  echo "   To re-check locally: npm run lint"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo ">>> Pre-commit: Running format + spellcheck on staged files..."
+if ! npx lint-staged; then
+  echo ""
+  echo "❌ COMMIT BLOCKED: Format or spellcheck on staged files failed."
+  echo "   Fix the errors above (or run: npm run format && npm run spellcheck), then try again."
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✅ Pre-commit passed. Proceeding with commit."
+echo ""

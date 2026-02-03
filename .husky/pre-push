@@ -1,0 +1,31 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+# Pre-push: typecheck and tests must pass before push.
+# If any step fails, you see a clear message below and the push is blocked.
+# -----------------------------------------------------------------------------
+
+echo ""
+echo ">>> Pre-push: Running typecheck..."
+if ! npm run typecheck; then
+  echo ""
+  echo "❌ PUSH BLOCKED: TypeScript / typecheck failed."
+  echo "   Fix the errors above, then try your push again."
+  echo "   To re-check locally: npm run typecheck"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo ">>> Pre-push: Running tests..."
+if ! npm run test:run; then
+  echo ""
+  echo "❌ PUSH BLOCKED: One or more tests failed."
+  echo "   Fix the failing tests above, then try your push again."
+  echo "   To re-run tests locally: npm run test:run"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✅ Pre-push passed. Proceeding with push."
+echo ""

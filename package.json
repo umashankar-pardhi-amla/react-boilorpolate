@@ -5,13 +5,33 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
+    "dev:all": "concurrently -n dev,test -c blue,yellow \"npm run dev\" \"npm run test\"",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "test": "vitest",
+    "test": "cross-env VITEST=1 vitest",
     "test:run": "cross-env VITEST=1 vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "cross-env VITEST=1 vitest run --coverage",
     "lint": "eslint app/",
-    "format": "prettier --write \"app/**/*.{ts,tsx,css,json}\""
+    "format": "prettier --write \"app/**/*.{ts,tsx,css,json}\" \"tests/**/*.{ts,tsx}\"",
+    "validate": "npm run typecheck && npm run test:run && npm run lint",
+    "spellcheck": "cspell \"app/**/*.{ts,tsx,json,css}\" \"tests/**/*.{ts,tsx}\"",
+    "spellcheck:ci": "cspell \"app/**/*.{ts,tsx,json,css}\" \"tests/**/*.{ts,tsx}\" \"*.md\" --no-progress",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "app/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "cspell --no-must-find-files"
+    ],
+    "tests/**/*.{ts,tsx}": [
+      "prettier --write",
+      "cspell --no-must-find-files"
+    ],
+    "app/**/*.{css,json}": [
+      "prettier --write",
+      "cspell --no-must-find-files"
+    ]
   },
   "dependencies": {
     "@react-router/node": "7.12.0",
@@ -38,10 +58,14 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitest/coverage-v8": "^4.0.18",
+    "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
+    "cspell": "^9.6.3",
     "eslint": "^9.39.2",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.1.7",
     "jsdom": "^28.0.0",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",

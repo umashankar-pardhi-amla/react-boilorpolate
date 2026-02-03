@@ -1,10 +1,10 @@
 /**
  * Core Registry System
- * 
+ *
  * This registry allows extensions to override base implementations
  * without modifying the base code. Similar to class override patterns
  * in backend frameworks.
- * 
+ *
  * Usage:
  * - Base implementations go in app/core/base/
  * - Extensions go in app/extensions/
@@ -74,9 +74,9 @@ class Registry {
 
     // Merge base and extension (replace entirely for functions)
     if (entry.extension) {
-      if (typeof entry.base === 'function' && typeof entry.extension === 'function') {
+      if (typeof entry.base === "function" && typeof entry.extension === "function") {
         entry.merged = entry.extension as T;
-      } else if (typeof entry.base !== 'object' || typeof entry.extension !== 'object') {
+      } else if (typeof entry.base !== "object" || typeof entry.extension !== "object") {
         entry.merged = entry.extension as T;
       } else {
         entry.merged = this.deepMerge(entry.base, entry.extension) as T;
@@ -113,16 +113,16 @@ class Registry {
     const result = { ...base };
 
     for (const key in extension) {
-      if (extension.hasOwnProperty(key)) {
+      if (Object.hasOwn(extension, key)) {
         const baseValue = base[key];
         const extValue = extension[key];
 
         if (
           extValue !== undefined &&
-          typeof extValue === 'object' &&
+          typeof extValue === "object" &&
           extValue !== null &&
           !Array.isArray(extValue) &&
-          typeof baseValue === 'object' &&
+          typeof baseValue === "object" &&
           baseValue !== null &&
           !Array.isArray(baseValue)
         ) {
@@ -164,5 +164,4 @@ export const registry = new Registry();
 /**
  * Helper to create a registry key
  */
-export const createRegistryKey = (namespace: string, key: string) => 
-  `${namespace}:${key}`;
+export const createRegistryKey = (namespace: string, key: string) => `${namespace}:${key}`;

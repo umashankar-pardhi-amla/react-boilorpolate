@@ -60,6 +60,8 @@ npm install
 npm run dev
 ```
 
+For a faster workflow (dev + test watch in one terminal): `npm run dev:all`. See [FAST_DEVELOPMENT.md](./FAST_DEVELOPMENT.md).
+
 ### Build
 
 ```bash
@@ -76,12 +78,20 @@ npm run test:coverage  # With coverage
 
 See [TESTING.md](./TESTING.md) for the full testing guide.
 
-### Lint & Format
+### Lint, format & spellcheck
 
 ```bash
-npm run lint      # ESLint
-npm run format    # Prettier
+npm run lint        # ESLint
+npm run format      # Prettier
+npm run spellcheck  # cspell (typos in app + tests)
 ```
+
+### Quality at check-in (Husky)
+
+- **Pre-commit:** lint-staged runs ESLint + cspell on staged files.
+- **Pre-push:** typecheck + test:run.
+
+See [QUALITY_CHECKS.md](./QUALITY_CHECKS.md).
 
 ### Production
 

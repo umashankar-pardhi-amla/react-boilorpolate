@@ -37,6 +37,8 @@ Use this checklist before deploying to production. No temporary or placeholder i
 - [ ] **TypeScript** – `npm run typecheck` passes with no errors.
 - [ ] **Lint** – `npm run lint` passes (fix or adjust rules as needed).
 - [ ] **Format** – `npm run format` to keep style consistent.
+- [ ] **Spellcheck** – `npm run spellcheck` (or `npm run spellcheck:ci`) passes; add terms in `cspell.json` if needed.
+- [ ] **Husky** – Pre-commit (lint-staged + cspell) and pre-push (typecheck + tests) are in place; see [QUALITY_CHECKS.md](./QUALITY_CHECKS.md).
 - [ ] **No base edits** – All overrides live in `app/extensions/`; `app/core/` is unchanged.
 
 ---
