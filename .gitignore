@@ -31,3 +31,6 @@ dist-ssr
 # Build outputs
 build
 .react-router
+
+# Test coverage
+coverage

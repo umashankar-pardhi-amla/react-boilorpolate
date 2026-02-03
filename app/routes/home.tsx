@@ -8,7 +8,7 @@ import { Card, Space, Typography } from "antd";
 
 const { Title, Paragraph } = Typography;
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_args: Route.MetaArgs) {
   return [
     { title: "React Boilerplate - Enterprise Base" },
     { name: "description", content: "Extensible React boilerplate with enterprise features" },

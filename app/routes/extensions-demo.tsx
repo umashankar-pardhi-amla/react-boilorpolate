@@ -13,7 +13,7 @@ import { Space, Typography, Divider, Tag } from "antd";
 
 const { Title, Paragraph, Text } = Typography;
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_args: Route.MetaArgs) {
   return [
     { title: "Extensibility Examples" },
     { name: "description", content: "Function, component, Zustand, and CSS extensions" },

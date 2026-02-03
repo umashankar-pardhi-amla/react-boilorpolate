@@ -8,4 +8,5 @@ export default [
   route("forgot-password", "routes/forgot-password.tsx"),
   route("dashboard", "routes/dashboard.tsx"),
   route("extensions-demo", "routes/extensions-demo.tsx"),
+  route("unauthorized", "routes/unauthorized.tsx"),
 ] satisfies RouteConfig;

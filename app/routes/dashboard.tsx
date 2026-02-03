@@ -4,7 +4,7 @@ import { AuthLayoutWithSidebar } from '~/layouts';
 import { Menu } from '~/components';
 import { defaultMenuItems } from '~/core/config/menu';
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_args: Route.MetaArgs) {
   return [
     { title: 'Dashboard' },
     { name: 'description', content: 'Your dashboard' },

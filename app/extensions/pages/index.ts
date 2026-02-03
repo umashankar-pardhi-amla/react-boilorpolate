@@ -6,3 +6,5 @@ export { Login } from './Login';
 export { Signup } from './Signup';
 export { Dashboard } from './Dashboard';
 export { ForgotPassword } from './ForgotPassword';
+export { NotFound } from './NotFound';
+export { Unauthorized } from './Unauthorized';

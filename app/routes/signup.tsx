@@ -2,7 +2,7 @@ import type { Route } from './+types/signup';
 import { Signup } from '~/pages';
 import { PublicLayout } from '~/layouts';
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_args: Route.MetaArgs) {
   return [
     { title: 'Create account' },
     { name: 'description', content: 'Create a new account' },

@@ -66,6 +66,34 @@ npm run dev
 npm run build
 ```
 
+### Testing
+
+```bash
+npm test          # Watch mode
+npm run test:run  # Single run (CI)
+npm run test:coverage  # With coverage
+```
+
+See [TESTING.md](./TESTING.md) for the full testing guide.
+
+### Lint & Format
+
+```bash
+npm run lint      # ESLint
+npm run format    # Prettier
+```
+
+### Production
+
+Before deploying, use [PRODUCTION_CHECKLIST.md](./PRODUCTION_CHECKLIST.md). Run:
+
+```bash
+npm run typecheck
+npm run test:run
+npm run lint
+npm run build
+```
+
 ## Extending the Base
 
 ### 1. Override Logger

@@ -12,7 +12,9 @@
 8. [Routing](#routing)
 9. [Data Fetching](#data-fetching)
 10. [Application Flow](#application-flow)
-11. [Best Practices](#best-practices)
+11. [Testing](#testing)
+12. [Production Readiness](#production-readiness)
+13. [Best Practices](#best-practices)
 
 ---
 
@@ -607,6 +609,25 @@ const newUser = await httpClient.post('/api/users', { name: 'John' });
    ↓
 6. Returns merged result
 ```
+
+---
+
+## Testing
+
+- **Framework:** Vitest + React Testing Library + jsdom
+- **Commands:** `npm test` (watch), `npm run test:run` (CI), `npm run test:coverage`
+- **Location:** Co-located `*.test.ts` / `*.test.tsx` or `__tests__/`
+- **Setup:** `vitest.setup.ts` loads `@testing-library/jest-dom`; tests run with `VITEST=1` so the React Router Vite plugin is disabled
+- **Docs:** [TESTING.md](./TESTING.md)
+
+---
+
+## Production Readiness
+
+- **Env validation:** `app/core/config/env.ts` uses zod; override in extensions if needed
+- **404:** Root ErrorBoundary renders `NotFound` for 404
+- **403:** `/unauthorized` route and `Unauthorized` page
+- **Checklist:** [PRODUCTION_CHECKLIST.md](./PRODUCTION_CHECKLIST.md) – security, testing, deploy, extensions
 
 ---
 
