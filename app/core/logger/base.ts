@@ -1,6 +1,6 @@
 /**
  * Base Logger Implementation
- * 
+ *
  * Extend this by creating app/extensions/logger/logger.ts
  */
 
@@ -17,14 +17,14 @@ export interface LoggerConfig {
   enableConsole: boolean;
   enableRemote?: boolean;
   remoteEndpoint?: string;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
 }
 
 export interface LogEntry {
   level: LogLevel;
   message: string;
   timestamp: Date;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
   error?: Error;
   stack?: string;
 }
@@ -44,17 +44,21 @@ export class BaseLogger {
     return level >= this.config.level;
   }
 
-  protected formatMessage(level: LogLevel, message: string, context?: Record<string, any>): string {
+  protected formatMessage(
+    level: LogLevel,
+    message: string,
+    context?: Record<string, unknown>
+  ): string {
     const timestamp = new Date().toISOString();
     const levelName = LogLevel[level];
-    const contextStr = context ? ` ${JSON.stringify(context)}` : '';
+    const contextStr = context ? ` ${JSON.stringify(context)}` : "";
     return `[${timestamp}] [${levelName}] ${message}${contextStr}`;
   }
 
   protected createLogEntry(
     level: LogLevel,
     message: string,
-    context?: Record<string, any>,
+    context?: Record<string, unknown>,
     error?: Error
   ): LogEntry {
     return {
@@ -75,21 +79,21 @@ export class BaseLogger {
     try {
       // Base implementation - can be overridden
       await fetch(this.config.remoteEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(entry),
       });
     } catch (error) {
       // Silently fail to avoid logging loops
-      console.error('Failed to send log to remote:', error);
+      console.error("Failed to send log to remote:", error);
     }
   }
 
-  debug(message: string, context?: Record<string, any>): void {
+  debug(message: string, context?: Record<string, unknown>): void {
     if (!this.shouldLog(LogLevel.DEBUG)) return;
 
     const entry = this.createLogEntry(LogLevel.DEBUG, message, context);
-    
+
     if (this.config.enableConsole) {
       console.debug(this.formatMessage(LogLevel.DEBUG, message, entry.context));
     }
@@ -97,11 +101,11 @@ export class BaseLogger {
     this.sendToRemote(entry).catch(() => {});
   }
 
-  info(message: string, context?: Record<string, any>): void {
+  info(message: string, context?: Record<string, unknown>): void {
     if (!this.shouldLog(LogLevel.INFO)) return;
 
     const entry = this.createLogEntry(LogLevel.INFO, message, context);
-    
+
     if (this.config.enableConsole) {
       console.info(this.formatMessage(LogLevel.INFO, message, entry.context));
     }
@@ -109,11 +113,11 @@ export class BaseLogger {
     this.sendToRemote(entry).catch(() => {});
   }
 
-  warn(message: string, context?: Record<string, any>): void {
+  warn(message: string, context?: Record<string, unknown>): void {
     if (!this.shouldLog(LogLevel.WARN)) return;
 
     const entry = this.createLogEntry(LogLevel.WARN, message, context);
-    
+
     if (this.config.enableConsole) {
       console.warn(this.formatMessage(LogLevel.WARN, message, entry.context));
     }
@@ -121,11 +125,11 @@ export class BaseLogger {
     this.sendToRemote(entry).catch(() => {});
   }
 
-  error(message: string, error?: Error, context?: Record<string, any>): void {
+  error(message: string, error?: Error, context?: Record<string, unknown>): void {
     if (!this.shouldLog(LogLevel.ERROR)) return;
 
     const entry = this.createLogEntry(LogLevel.ERROR, message, context, error);
-    
+
     if (this.config.enableConsole) {
       console.error(this.formatMessage(LogLevel.ERROR, message, entry.context), error);
     }
@@ -137,7 +141,7 @@ export class BaseLogger {
     this.config.level = level;
   }
 
-  setContext(context: Record<string, any>): void {
+  setContext(context: Record<string, unknown>): void {
     this.config.context = { ...this.config.context, ...context };
   }
 

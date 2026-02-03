@@ -1,13 +1,13 @@
 /**
  * Base Store Pattern for Zustand
- * 
+ *
  * Extend stores by creating app/extensions/stores/[store-name].ts
  */
 
-import { create } from 'zustand';
-import type { StateCreator, StoreApi, UseBoundStore } from 'zustand';
-import { devtools, subscribeWithSelector } from 'zustand/middleware';
-import { logger } from '../logger';
+import { create } from "zustand";
+import type { StateCreator, StoreApi, UseBoundStore } from "zustand";
+import { devtools, subscribeWithSelector } from "zustand/middleware";
+import { logger } from "../logger";
 
 export interface StoreConfig {
   name: string;
@@ -27,17 +27,14 @@ export function createBaseStore<T extends object>(
 ): UseBoundStore<StoreApi<T>> {
   const { name, enableDevtools = import.meta.env.DEV, enableSubscribeWithSelector = true } = config;
 
-  // Build middleware chain
-  let middleware: any = storeCreator;
+  // Build middleware chain (wrapped types are compatible at runtime)
+  let middleware: StateCreator<T, [], [], T> = storeCreator;
 
-  // Add subscribeWithSelector middleware first
   if (enableSubscribeWithSelector) {
-    middleware = subscribeWithSelector(middleware);
+    middleware = subscribeWithSelector(middleware) as StateCreator<T, [], [], T>;
   }
-
-  // Add devtools middleware last
   if (enableDevtools) {
-    middleware = devtools(middleware, { name });
+    middleware = devtools(middleware, { name }) as StateCreator<T, [], [], T>;
   }
 
   const store = create<T>()(middleware);

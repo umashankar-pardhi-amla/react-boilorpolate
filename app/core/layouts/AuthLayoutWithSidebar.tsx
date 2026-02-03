@@ -4,12 +4,12 @@
  * Override in app/extensions/layouts/AuthLayoutWithSidebar.tsx
  */
 
-import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router';
-import { Layout } from 'antd';
-import { useAuthStore } from '../stores/auth-store';
-import { Sidebar, Header, Content } from '../components';
-import type { SidebarProps, HeaderProps } from '../components';
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router";
+import { Layout } from "antd";
+import { useAuthStore } from "../stores/auth-store";
+import { Sidebar, Header, Content } from "../components";
+import type { SidebarProps, HeaderProps } from "../components";
 
 export interface AuthLayoutWithSidebarProps {
   children?: React.ReactNode;
@@ -57,7 +57,7 @@ export function AuthLayoutWithSidebar({
   headerLeft,
   headerRight,
   headerTitle,
-  permissions,
+  permissions: _permissions,
   sidebarProps,
   headerProps,
 }: AuthLayoutWithSidebarProps) {
@@ -67,7 +67,7 @@ export function AuthLayoutWithSidebar({
 
   useEffect(() => {
     if (!isAuthenticated || !user) {
-      navigate('/login');
+      navigate("/login");
     }
     // Future: check permissions here
   }, [isAuthenticated, user, navigate]);
@@ -82,7 +82,7 @@ export function AuthLayoutWithSidebar({
       <button
         onClick={() => {
           logout();
-          navigate('/login');
+          navigate("/login");
         }}
         className="text-sm text-gray-600 hover:text-gray-900"
       >
@@ -107,9 +107,7 @@ export function AuthLayoutWithSidebar({
           rightContent={defaultHeaderRight}
           {...headerProps}
         />
-        <Content>
-          {children || <Outlet />}
-        </Content>
+        <Content>{children || <Outlet />}</Content>
       </Layout>
     </Layout>
   );

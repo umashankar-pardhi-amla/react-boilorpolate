@@ -5,9 +5,9 @@
  * Override in app/extensions/layouts/AuthLayout.tsx
  */
 
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router';
-import { useAuthStore } from '../stores/auth-store';
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router";
+import { useAuthStore } from "../stores/auth-store";
 
 export interface AuthLayoutProps {
   children?: React.ReactNode;
@@ -21,13 +21,13 @@ export interface AuthLayoutProps {
   };
 }
 
-export function AuthLayout({ children, permissions }: AuthLayoutProps) {
+export function AuthLayout({ children, permissions: _permissions }: AuthLayoutProps) {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();
 
   useEffect(() => {
     if (!isAuthenticated || !user) {
-      navigate('/login');
+      navigate("/login");
     }
     // Future: check permissions here
     // if (permissions && !hasPermission(user, permissions)) {
@@ -39,9 +39,5 @@ export function AuthLayout({ children, permissions }: AuthLayoutProps) {
     return null; // Will redirect
   }
 
-  return (
-    <div className="auth-layout">
-      {children || <Outlet />}
-    </div>
-  );
+  return <div className="auth-layout">{children || <Outlet />}</div>;
 }

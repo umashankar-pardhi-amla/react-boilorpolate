@@ -1,4 +1,6 @@
 // Type declaration for optional extension
-declare module '~/extensions/logger/logger' {
-  export const logger: any;
+import type { BaseLogger } from "~/core/logger";
+
+declare module "~/extensions/logger/logger" {
+  export const logger: BaseLogger;
 }

@@ -2,17 +2,13 @@
  * Utility Functions
  */
 
-export {
-  formatDate,
-  getFormatDate,
-  baseFormatDate,
-} from './formatDate';
-export type { FormatDateFn } from './formatDate';
+export { formatDate, getFormatDate, baseFormatDate } from "./formatDate";
+export type { FormatDateFn } from "./formatDate";
 
 /**
  * Debounce function
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -34,7 +30,7 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * Throttle function
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -59,10 +55,10 @@ export function deepClone<T>(obj: T): T {
 /**
  * Check if value is empty
  */
-export function isEmpty(value: any): boolean {
+export function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined) return true;
-  if (typeof value === 'string') return value.trim().length === 0;
+  if (typeof value === "string") return value.trim().length === 0;
   if (Array.isArray(value)) return value.length === 0;
-  if (typeof value === 'object') return Object.keys(value).length === 0;
+  if (typeof value === "object") return Object.keys(value).length === 0;
   return false;
 }

@@ -17,7 +17,7 @@ export function meta(_args: Route.MetaArgs) {
 
 export default function Home() {
   const { count, increment, decrement, reset } = useExampleStore();
-  const { httpClient, isLoading: httpLoading } = useHttp();
+  const { isLoading: httpLoading } = useHttp();
 
   const handleTestLogger = () => {
     logger.info("Button clicked", { button: "test-logger" });
@@ -84,12 +84,7 @@ export default function Home() {
                 <Button type="default" onClick={handleTestLogger} block>
                   Test Logger
                 </Button>
-                <Button 
-                  type="default" 
-                  onClick={handleTestHttp} 
-                  block
-                  loading={httpLoading}
-                >
+                <Button type="default" onClick={handleTestHttp} block loading={httpLoading}>
                   Test HTTP Client
                 </Button>
               </Space>
@@ -97,16 +92,15 @@ export default function Home() {
 
             <Card title="Extensibility" className="bg-white">
               <Paragraph>
-                This project uses a registry pattern that allows you to extend base
-                implementations without modifying base code. See{" "}
-                <code className="bg-gray-100 px-2 py-1 rounded">EXTENSIBILITY.md</code>{" "}
-                for details.
+                This project uses a registry pattern that allows you to extend base implementations
+                without modifying base code. See{" "}
+                <code className="bg-gray-100 px-2 py-1 rounded">EXTENSIBILITY.md</code> for details.
               </Paragraph>
               <Paragraph>
                 <strong>Key Principle:</strong> Never modify files in{" "}
-                <code className="bg-gray-100 px-2 py-1 rounded">app/core/</code>.
-                Instead, create extensions in{" "}
-                <code className="bg-gray-100 px-2 py-1 rounded">app/extensions/</code>.
+                <code className="bg-gray-100 px-2 py-1 rounded">app/core/</code>. Instead, create
+                extensions in <code className="bg-gray-100 px-2 py-1 rounded">app/extensions/</code>
+                .
               </Paragraph>
               <div className="mt-4 flex flex-wrap gap-2">
                 <Link to="/extensions-demo">

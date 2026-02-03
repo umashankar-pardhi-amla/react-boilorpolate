@@ -1,12 +1,18 @@
 /**
  * Base HTTP Client Implementation
- * 
+ *
  * Extend this by creating app/extensions/http/client.ts
  */
 
-import axios from 'axios';
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { logger } from '../logger';
+import axios from "axios";
+import type {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from "axios";
+import { logger } from "../logger";
 
 export interface HttpConfig extends AxiosRequestConfig {
   baseURL?: string;
@@ -16,13 +22,15 @@ export interface HttpConfig extends AxiosRequestConfig {
 }
 
 export interface RequestInterceptor {
-  onFulfilled?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
-  onRejected?: (error: any) => any;
+  onFulfilled?: (
+    config: InternalAxiosRequestConfig
+  ) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  onRejected?: (error: unknown) => unknown;
 }
 
 export interface ResponseInterceptor {
   onFulfilled?: (response: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>;
-  onRejected?: (error: AxiosError) => any;
+  onRejected?: (error: AxiosError) => unknown;
 }
 
 export class BaseHttpClient {
@@ -32,10 +40,10 @@ export class BaseHttpClient {
 
   constructor(config: HttpConfig = {}) {
     this.client = axios.create({
-      baseURL: config.baseURL || import.meta.env.VITE_API_BASE_URL || '/api',
+      baseURL: config.baseURL || import.meta.env.VITE_API_BASE_URL || "/api",
       timeout: config.timeout || 30000,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...config.headers,
       },
       withCredentials: config.withCredentials ?? true,
@@ -62,7 +70,7 @@ export class BaseHttpClient {
 
         // Log request in dev mode
         if (import.meta.env.DEV) {
-          logger.debug('HTTP Request', {
+          logger.debug("HTTP Request", {
             method: config.method,
             url: config.url,
             baseURL: config.baseURL,
@@ -72,7 +80,7 @@ export class BaseHttpClient {
         return config;
       },
       (error) => {
-        logger.error('HTTP Request Error', error);
+        logger.error("HTTP Request Error", error);
         return Promise.reject(error);
       }
     );
@@ -82,7 +90,7 @@ export class BaseHttpClient {
       (response) => {
         // Log response in dev mode
         if (import.meta.env.DEV) {
-          logger.debug('HTTP Response', {
+          logger.debug("HTTP Response", {
             status: response.status,
             url: response.config.url,
           });
@@ -101,18 +109,12 @@ export class BaseHttpClient {
   protected setupCustomInterceptors(): void {
     // Request interceptors
     this.requestInterceptors.forEach((interceptor) => {
-      this.client.interceptors.request.use(
-        interceptor.onFulfilled,
-        interceptor.onRejected
-      );
+      this.client.interceptors.request.use(interceptor.onFulfilled, interceptor.onRejected);
     });
 
     // Response interceptors
     this.responseInterceptors.forEach((interceptor) => {
-      this.client.interceptors.response.use(
-        interceptor.onFulfilled,
-        interceptor.onRejected
-      );
+      this.client.interceptors.response.use(interceptor.onFulfilled, interceptor.onRejected);
     });
   }
 
@@ -121,8 +123,8 @@ export class BaseHttpClient {
    */
   protected getAuthToken(): string | null {
     // Base implementation - can be overridden in extensions
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("auth_token") || sessionStorage.getItem("auth_token");
     }
     return null;
   }
@@ -137,25 +139,25 @@ export class BaseHttpClient {
       // Handle specific status codes
       switch (status) {
         case 401:
-          logger.warn('Unauthorized request', { url: error.config?.url });
+          logger.warn("Unauthorized request", { url: error.config?.url });
           this.handleUnauthorized();
           break;
         case 403:
-          logger.warn('Forbidden request', { url: error.config?.url });
+          logger.warn("Forbidden request", { url: error.config?.url });
           break;
         case 404:
-          logger.warn('Resource not found', { url: error.config?.url });
+          logger.warn("Resource not found", { url: error.config?.url });
           break;
         case 500:
-          logger.error('Server error', undefined, { url: error.config?.url, data });
+          logger.error("Server error", undefined, { url: error.config?.url, data });
           break;
         default:
-          logger.error('HTTP Error', undefined, { status, url: error.config?.url, data });
+          logger.error("HTTP Error", undefined, { status, url: error.config?.url, data });
       }
     } else if (error.request) {
-      logger.error('Network error - no response received', error);
+      logger.error("Network error - no response received", error);
     } else {
-      logger.error('Request setup error', error);
+      logger.error("Request setup error", error);
     }
 
     return Promise.reject(error);
@@ -166,12 +168,12 @@ export class BaseHttpClient {
    */
   protected handleUnauthorized(): void {
     // Base implementation - can be overridden
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('auth_token');
-      sessionStorage.removeItem('auth_token');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("auth_token");
+      sessionStorage.removeItem("auth_token");
       // Redirect to login - can be overridden
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login';
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
       }
     }
   }
@@ -181,10 +183,7 @@ export class BaseHttpClient {
    */
   addRequestInterceptor(interceptor: RequestInterceptor): void {
     this.requestInterceptors.push(interceptor);
-    this.client.interceptors.request.use(
-      interceptor.onFulfilled,
-      interceptor.onRejected
-    );
+    this.client.interceptors.request.use(interceptor.onFulfilled, interceptor.onRejected);
   }
 
   /**
@@ -192,10 +191,7 @@ export class BaseHttpClient {
    */
   addResponseInterceptor(interceptor: ResponseInterceptor): void {
     this.responseInterceptors.push(interceptor);
-    this.client.interceptors.response.use(
-      interceptor.onFulfilled,
-      interceptor.onRejected
-    );
+    this.client.interceptors.response.use(interceptor.onFulfilled, interceptor.onRejected);
   }
 
   /**
@@ -206,23 +202,35 @@ export class BaseHttpClient {
   }
 
   // Convenience methods
-  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.client.get<T>(url, config);
   }
 
-  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  post<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
     return this.client.post<T>(url, data, config);
   }
 
-  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  put<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
     return this.client.put<T>(url, data, config);
   }
 
-  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  patch<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
     return this.client.patch<T>(url, data, config);
   }
 
-  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  delete<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.client.delete<T>(url, config);
   }
 }

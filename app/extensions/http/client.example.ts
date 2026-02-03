@@ -1,28 +1,27 @@
 /**
  * Example HTTP Client Extension
- * 
+ *
  * Copy this file to client.ts to override the base HTTP client
- * 
+ *
  * This is an EXAMPLE file - rename to client.ts to use it
  */
 
-import { BaseHttpClient } from '~/core/http';
-import type { HttpConfig } from '~/core/http';
-import type { AxiosError } from 'axios';
+import { BaseHttpClient } from "~/core/http";
+import type { AxiosError } from "axios";
 
 export class ExtendedHttpClient extends BaseHttpClient {
   protected getAuthToken(): string | null {
     // Custom token retrieval logic
     // Example: Get from a different storage or API
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Try multiple sources
       return (
-        localStorage.getItem('auth_token') ||
-        sessionStorage.getItem('auth_token') ||
+        localStorage.getItem("auth_token") ||
+        sessionStorage.getItem("auth_token") ||
         document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('token='))
-          ?.split('=')[1] ||
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1] ||
         null
       );
     }
@@ -32,7 +31,7 @@ export class ExtendedHttpClient extends BaseHttpClient {
   protected async handleResponseError(error: AxiosError): Promise<never> {
     // Custom error handling
     if (error.response) {
-      const { status, data } = error.response;
+      const { status } = error.response;
 
       // Handle specific status codes with custom logic
       switch (status) {
@@ -60,12 +59,12 @@ export class ExtendedHttpClient extends BaseHttpClient {
     // Custom unauthorized handling
     // Maybe try to refresh token first?
     // Or redirect to a specific login page
-    
-    if (typeof window !== 'undefined') {
+
+    if (typeof window !== "undefined") {
       // Clear tokens
-      localStorage.removeItem('auth_token');
-      sessionStorage.removeItem('auth_token');
-      
+      localStorage.removeItem("auth_token");
+      sessionStorage.removeItem("auth_token");
+
       // Redirect to login with return URL
       const returnUrl = encodeURIComponent(window.location.pathname);
       window.location.href = `/login?returnUrl=${returnUrl}`;
@@ -74,7 +73,7 @@ export class ExtendedHttpClient extends BaseHttpClient {
 }
 
 export const httpClient = new ExtendedHttpClient({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
   timeout: 30000,
   withCredentials: true,
 });

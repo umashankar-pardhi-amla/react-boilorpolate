@@ -1,12 +1,12 @@
 /**
  * Base React Query Configuration
- * 
+ *
  * Extend this by creating app/extensions/query/config.ts
  */
 
-import { QueryClient } from '@tanstack/react-query';
-import type { QueryClientConfig, DefaultOptions } from '@tanstack/react-query';
-import { logger } from '../logger';
+import { QueryClient } from "@tanstack/react-query";
+import type { QueryClientConfig, DefaultOptions } from "@tanstack/react-query";
+import { logger } from "../logger";
 
 export interface QueryConfig extends QueryClientConfig {
   defaultOptions?: DefaultOptions;
@@ -51,9 +51,9 @@ export class BaseQueryConfig {
   /**
    * Setup devtools - can be overridden
    */
-  protected setupDevtools(queryClient: QueryClient): void {
+  protected setupDevtools(_queryClient: QueryClient): void {
     // Base implementation - can be extended
-    logger.debug('React Query DevTools enabled');
+    logger.debug("React Query DevTools enabled");
   }
 
   /**

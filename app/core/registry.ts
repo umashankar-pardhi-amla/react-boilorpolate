@@ -12,7 +12,6 @@
  */
 
 type ExtensionLoader<T> = () => Promise<T | undefined>;
-type BaseLoader<T> = () => T;
 
 interface RegistryEntry<T> {
   base: T;
@@ -21,8 +20,8 @@ interface RegistryEntry<T> {
 }
 
 class Registry {
-  private entries = new Map<string, RegistryEntry<any>>();
-  private extensionLoaders = new Map<string, ExtensionLoader<any>>();
+  private entries = new Map<string, RegistryEntry<unknown>>();
+  private extensionLoaders = new Map<string, ExtensionLoader<unknown>>();
 
   /**
    * Register a base implementation
@@ -79,7 +78,10 @@ class Registry {
       } else if (typeof entry.base !== "object" || typeof entry.extension !== "object") {
         entry.merged = entry.extension as T;
       } else {
-        entry.merged = this.deepMerge(entry.base, entry.extension) as T;
+        entry.merged = this.deepMerge(
+          entry.base as Record<string, unknown>,
+          entry.extension as Partial<Record<string, unknown>>
+        ) as T;
       }
     } else {
       entry.merged = entry.base as T;
@@ -109,7 +111,7 @@ class Registry {
   /**
    * Deep merge two objects, with extension taking precedence
    */
-  private deepMerge<T extends Record<string, any>>(base: T, extension: Partial<T>): T {
+  private deepMerge<T extends Record<string, unknown>>(base: T, extension: Partial<T>): T {
     const result = { ...base };
 
     for (const key in extension) {
@@ -126,7 +128,10 @@ class Registry {
           baseValue !== null &&
           !Array.isArray(baseValue)
         ) {
-          result[key] = this.deepMerge(baseValue, extValue);
+          result[key] = this.deepMerge(
+            baseValue as Record<string, unknown>,
+            extValue as Partial<Record<string, unknown>>
+          ) as T[Extract<keyof T, string>];
         } else if (extValue !== undefined) {
           result[key] = extValue as T[Extract<keyof T, string>];
         }
